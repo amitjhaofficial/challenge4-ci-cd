@@ -1,3 +1,4 @@
+# This workflow builds a Docker image, pushes it to Amazon ECR, and deploys it to Amazon ECS.
 name: Deploy to Amazon ECS
 
 on:
