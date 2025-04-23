@@ -1,16 +1,16 @@
-# Use official Node.js image
+# Use Node.js Alpine image
 FROM node:18-alpine
 
-# Create app directory
+# Set working directory
 WORKDIR /usr/src/app
 
 # Copy package files and install dependencies
-COPY package.json ./
+COPY ./app/package*.json ./
 RUN npm install
 
-# Copy application code
-COPY . .
+# Copy rest of the application
+COPY ./app .
 
-# Expose port and run app
+# Expose port and run the app
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD [ "node", "index.js" ]

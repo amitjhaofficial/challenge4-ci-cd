@@ -1,5 +1,3 @@
-# Trigger redeploy
-
 name: Deploy to Amazon ECS
 
 on:
@@ -33,9 +31,10 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./app
+          cd app
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
+      
       - name: Deploy to ECS
         run: |
           aws ecs update-service \
