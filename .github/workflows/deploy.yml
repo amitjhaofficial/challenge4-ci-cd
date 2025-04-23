@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  DOCKER_CLI_EXPERIMENTAL: disabled  # 👈 disables buildx usage
+
 jobs:
   deploy:
     name: Build, Push, and Deploy
