@@ -5,13 +5,12 @@ on:
     branches:
       - main
 
-env:
-  DOCKER_CLI_EXPERIMENTAL: disabled  # 👈 disables buildx usage
-
 jobs:
   deploy:
     name: Build, Push, and Deploy
     runs-on: ubuntu-latest
+    env:
+      DOCKER_CLI_EXPERIMENTAL: "disabled"
 
     steps:
       - name: Checkout code
@@ -37,7 +36,6 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./app
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-
       - name: Deploy to ECS
         run: |
           aws ecs update-service \
@@ -45,4 +43,3 @@ jobs:
             --service ${{ secrets.ECS_SERVICE }} \
             --force-new-deployment \
             --region ${{ secrets.AWS_REGION }}
-
